@@ -13,8 +13,8 @@ function App() {
       {(typeof backend.users === 'undefined') ? (
         <p>Loading...</p>
       ) : (
-        backend.users.map((user, index) => (
-          <p key={index}>{user}</p>
+        backend.users.map((data, index) => (
+          <p key={index}>{data}</p>
         ))
       )}
     </>
