@@ -109,6 +109,7 @@ export const getUserIdFromEmail = email => {
 };
 
 // asynchronous function (by using datalock wrapper) to login a user
+// access token and user id object using 'login().then(res => ... )'
 export const login = (email, password) => dataLock((resolve, reject) => {
   const userId = getUserIdFromEmail(email);
   if (userId !== undefined && users[userId].password === password) {
@@ -165,9 +166,11 @@ export const userGet = (userId) => dataLock((resolve, reject) => {
     id: intid,
   };
   resolve(user);
+  // access  user object using 'userGet(id).then(res => ... )'
 });
 
 export const userAdminChange = (authUserId, userId, turnon) => dataLock((resolve, reject) => {
+  // we assume only admins will have the option / ability to change admin status of users
   if (turnon === undefined) {
     reject(new InputError('turnon property is missing'));
     return;
