@@ -84,16 +84,18 @@ const generateId = (currentList, max = 999999) => {
 ***************************************************************/
 
 /**
- * Extracts and verifies the user ID from the Authorisation HTTP header.
+ * Extracts and verifies the user ID from the Authorization HTTP header.
  *
- * @param {string} authorisation - The Authorisation header containing the Bearer token.
+ * @param {string} authorization - The Authorization header containing the Bearer token.
  * @returns {string} - The user ID from the decoded JWT token as a string.
  * @throws {AccessError} - If the token is invalid, expired, or the user ID is not found in the users collection.
  */
-export const getUserIdFromAuthorization = authorisation => {
-  // Note: Authorisation header comes in the format: 'Bearer myToken'
-  const token = authorisation.replace('Bearer ', '');
+export const getUserIdFromAuthorization = authorization => {
+  // Note: Authorization header comes in the format: 'Bearer myToken'
+  const token = authorization.replace('Bearer ', '');
+  console.log("auth", authorization);
   try {
+    // console.log(typeof token);
     const { userId, } = jwt.verify(token, JWT_KEY);
     if (!(userId in users)) {
       throw new AccessError(`Invalid token ${token}`);
@@ -122,6 +124,12 @@ export const login = (email, password) => dataLock((resolve, reject) => {
   reject(new InputError(`Invalid email ${email} or password ${password}`));
 });
 
+export const logout = (email) =>
+  userLock((resolve, reject) => {
+    users[email].sessionActive = false;
+    resolve();
+  });
+
 export const register = (email, password, name) => dataLock((resolve, reject) => {
   if (getUserIdFromEmail(email) !== undefined) {
     throw new InputError(`Email address ${email} already registered`);
@@ -139,6 +147,21 @@ export const register = (email, password, name) => dataLock((resolve, reject) =>
     userId: parseInt(userId, 10),
   });
 });
+
+/***************************************************************
+                       Subjects Functions
+***************************************************************/
+
+export const getSubjects = (authUserId) =>
+  userLock((resolve, reject) => {
+    resolve(users[authUserId].subjects);
+  });
+
+export const setSubjects = (authUserId, subjects) =>
+  userLock((resolve, reject) => {
+    users[authUserId].subjects = subjects;
+    resolve();
+  });
 
 /***************************************************************
                          User Functions
@@ -159,6 +182,7 @@ export const assertAdminUserId = (userId) => dataLock((resolve, reject) => {
 });
 
 export const userGet = (userId) => dataLock((resolve, reject) => {
+  console.log("wasssup", userId);
   const intid = parseInt(userId, 10);
   const user = {
     ...users[userId],
