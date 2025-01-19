@@ -1,22 +1,69 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import PageRegister from './pages/PageRegister.jsx';
+import PageLogin from './pages/PageLogin.jsx';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate
+} from 'react-router-dom';
+import PageDashboard from './pages/PageDashboard.jsx';
+import Logout from './components/Logout.jsx';
 
 function App() {
+
+  const [token, setToken] = useState(null);
   const [backend, setBackend] = useState([{}])
 
   useEffect(() => {
     fetch("/api").then(res => res.json()).then(data => setBackend(data))
   }, [])
 
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
+      setToken(localStorage.getItem('token'));
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   fetch("/subjects").then(res => res.json()).then(data => setBackend(data))
+  // }, [])
+
   return (
     <>
-      {(typeof backend.users === 'undefined') ? (
-        <p>Loading...</p>
-      ) : (
-        backend.users.map((data, index) => (
-          <p key={index}>{data}</p>
-        ))
-      )}
+      <BrowserRouter>
+        <div className='mx-auto flex justify-end p-6 lg:px-8'>
+          { token ? (
+            <>
+              <Link
+                to="/"
+                className="rounded-md bg-[#2563eb] px-3.5 py-1.5 mx-1 text-center text-sm/6 font-semibold text-white shadow-sm hover:bg-[#3b82f6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bae6fd] transition duration-300"
+              >Dashboard</Link>
+              <Logout
+                token={token}
+                setTokenFn={setToken} />
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="rounded-md bg-white px-3.5 py-1.5 mx-1 text-center text-sm/6 font-semibold text-black shadow-sm hover:text-[#3b82f6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bae6fd] transition duration-300" 
+              >Login</Link>
+              <Link 
+                to="/register"
+                className="rounded-md bg-[#2563eb] px-3.5 py-1.5 mx-1 text-center text-sm/6 font-semibold text-white shadow-sm hover:bg-[#3b82f6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bae6fd] transition duration-300"
+              >Sign up</Link>
+            </>
+          )}  
+        </div>
+        <Routes>
+          <Route path="/" element={<PageDashboard setTokenFn={setToken}/>} />
+          <Route path="/register" element={<PageRegister setTokenFn={setToken}/>} />
+          <Route path="/login" element={<PageLogin setTokenFn={setToken}/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
