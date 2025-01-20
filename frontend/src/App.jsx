@@ -42,7 +42,7 @@ function App() {
                 className="rounded-md bg-[#2563eb] px-3.5 py-1.5 mx-1 text-center text-sm/6 font-semibold text-white shadow-sm hover:bg-[#3b82f6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bae6fd] transition duration-300"
               >Dashboard</Link>
               <Logout
-                token={token}
+                token={token.token}
                 setTokenFn={setToken} />
             </>
           ) : (

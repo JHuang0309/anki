@@ -1,46 +1,20 @@
 {
   "users": {
-    "140460": {
+    "244757": {
       "email": "kcwfong@gmail.com",
-      "name": "kirsten ",
+      "name": "kirsten",
       "password": "anki",
       "image": null,
-      "admin": false
+      "admin": true,
+      "sessionActive": false
     },
-    "239202": {
-      "email": "test3@gmail.com",
-      "name": "test",
-      "password": "123",
-      "image": null,
-      "admin": false
-    },
-    "399538": {
-      "email": "test1@gmail.com",
-      "name": "test",
-      "password": "123",
-      "image": null,
-      "admin": true
-    },
-    "462843": {
-      "email": "test4@gmail.com",
-      "name": "test",
-      "password": "123",
-      "image": null,
-      "admin": false
-    },
-    "571685": {
-      "email": "test2@gmail.com",
-      "name": "test",
-      "password": "123",
-      "image": null,
-      "admin": false
-    },
-    "584602": {
+    "962556": {
       "email": "test@gmail.com",
       "name": "test",
       "password": "123",
       "image": null,
-      "admin": false
+      "admin": false,
+      "sessionActive": false
     }
   },
   "cards": {}

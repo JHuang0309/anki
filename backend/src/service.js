@@ -93,9 +93,7 @@ const generateId = (currentList, max = 999999) => {
 export const getUserIdFromAuthorization = authorization => {
   // Note: Authorization header comes in the format: 'Bearer myToken'
   const token = authorization.replace('Bearer ', '');
-  console.log("auth", authorization);
   try {
-    // console.log(typeof token);
     const { userId, } = jwt.verify(token, JWT_KEY);
     if (!(userId in users)) {
       throw new AccessError(`Invalid token ${token}`);
@@ -125,7 +123,7 @@ export const login = (email, password) => dataLock((resolve, reject) => {
 });
 
 export const logout = (email) =>
-  userLock((resolve, reject) => {
+  dataLock((resolve, reject) => {
     users[email].sessionActive = false;
     resolve();
   });
@@ -182,7 +180,6 @@ export const assertAdminUserId = (userId) => dataLock((resolve, reject) => {
 });
 
 export const userGet = (userId) => dataLock((resolve, reject) => {
-  console.log("wasssup", userId);
   const intid = parseInt(userId, 10);
   const user = {
     ...users[userId],

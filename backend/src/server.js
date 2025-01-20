@@ -55,7 +55,6 @@ const performRequest = fn => async (req, res) => {
 ***************************************************************/
 
 const authed = (fn) => async (req, res) => {
-    // console.log("auth function:", req.header("Authorization"))
     const userId = getUserIdFromAuthorization(req.header("Authorization"));
     await fn(req, res, userId);
 };
@@ -83,8 +82,9 @@ app.post(
     "/admin/auth/logout",
     performRequest(
         authed(async (req, res, email) => {
-        await logout(email);
-        return res.json({});
+          console.log("Server logout", email)
+          await logout(email);
+          return res.json({});
         })
     )
 );
@@ -124,7 +124,6 @@ app.get(
     authed(async (req, res, authUserId) => {
       await userGet(authUserId)
       .then(data => {
-        console.log(data);
         res.json(data); // Respond to the client with the data
       })
       .catch(data => {

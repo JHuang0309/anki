@@ -57,7 +57,7 @@ const PageRegister = ({ token, setTokenFn}) => {
           name: name,
         })
           .then(res => {
-            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('token', res.data.token.token);
             setTokenFn(res.data.token);
             navigate('/');
           })
