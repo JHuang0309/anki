@@ -22,13 +22,13 @@ const Modal = ({ closeModal, createCard }) => {
               transition
               className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all 
                         data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 
-                        data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-4xl sm:h-[80vh] data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95
-                        flex-col justify-between"
+                        data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-2xl sm:h-[80vh] data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95
+                        flex flex-col justify-between"
             >
               <div className="bg-white px-4 pb-4 pt-5 sm:py-6 sm:px-4 sm:pb-4">
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                        Create new card
+                        Create new question card
                     </DialogTitle>
                     <div className='mt-1.5 mb-2.5'>
                         <input 
@@ -39,6 +39,68 @@ const Modal = ({ closeModal, createCard }) => {
                             className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-inset focus:ring-[#2563eb] sm:text-sm/6"
                         />
                     </div>
+                    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+                <div className='sm:col-span-3'>
+                    <label htmlFor="width" className="block text-sm/6 font-medium text-gray-900">
+                    Topic
+                    </label>
+                    <input
+                    id="width"
+                    name="width"
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    />
+                </div>
+                <div className='sm:col-span-3'>
+                    <label htmlFor="height" className="block text-sm/6 font-medium text-gray-900">
+                    Difficulty
+                    </label>
+                    <input
+                    id="height"
+                    name="height"
+                    type="text"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    />
+                </div>
+                <div className="sm:col-span-6">
+                    <label htmlFor="text" className="block text-sm/6 font-medium text-gray-900">
+                    Question description
+                    </label>
+                    <textarea
+                    id="text"
+                    name="text"
+                    type="textarea"
+                    rows={3}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    defaultValue={''}
+                    placeholder="Enter your text here..."
+                    />
+                </div>
+                <div className='sm:col-span-2'>
+                    <label htmlFor="fontSize" className="block text-sm/6 font-medium text-gray-900">
+                    Font Size (em)
+                    </label>
+                    <input
+                    id="fontSize"
+                    name="fontSize"
+                    type="text"
+                    placeholder='1.0'
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    />
+                </div>
+                <div className='sm:col-span-2'>
+                    <label htmlFor="colour" className="block text-sm/6 font-medium text-gray-900">
+                    Font Colour (HEX)
+                    </label>
+                    <input
+                    id="colour"
+                    name="colour"
+                    type="text"
+                    placeholder='#FFFFFF'
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    />
+                </div>
+                </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-between">
