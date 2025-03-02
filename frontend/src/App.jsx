@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import PageRegister from './pages/PageRegister.jsx';
-import PageLogin from './pages/PageLogin.jsx';
+
 import {
   BrowserRouter,
   Routes,
@@ -9,8 +8,12 @@ import {
   Link,
   Navigate
 } from 'react-router-dom';
+
+import PageRegister from './pages/PageRegister.jsx';
+import PageLogin from './pages/PageLogin.jsx';
 import PageDashboard from './pages/PageDashboard.jsx';
 import Logout from './components/Logout.jsx';
+import PageEdit from './pages/PageEdit.jsx';
 
 function App() {
 
@@ -62,6 +65,7 @@ function App() {
           <Route path="/" element={<PageDashboard setTokenFn={setToken}/>} />
           <Route path="/register" element={<PageRegister setTokenFn={setToken}/>} />
           <Route path="/login" element={<PageLogin setTokenFn={setToken}/>}/>
+          <Route path="/edit" element={<PageEdit setTokenFn={setToken}/>}/>
         </Routes>
       </BrowserRouter>
     </>

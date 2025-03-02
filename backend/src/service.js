@@ -21,6 +21,7 @@ const DATABASE_FILE = './database.json'; // for now we'll use a local database t
 
 let users = {};
 let cards = {};
+let decks = {};
 
 const update = (users) =>
   // using a promise to manage asynchronous calling of 'await update()'
@@ -31,7 +32,8 @@ const update = (users) =>
         // write to the database.json file
         fs.writeFileSync(DATABASE_FILE, JSON.stringify({ 
           users,
-          cards,  
+          cards,
+          decks,  
         }, null, 2));
         resolve();
       } catch {
@@ -44,8 +46,9 @@ export const save = () => update(users);
 export const reset = () => {
   update({}, {}, {}, {}); // clear the database.json file
   // reset global variables
-  users = {}; 
+  users = {};
   cards = {};
+  decks = {};
 };
 
 // Load database contents into global variables upon start up
@@ -53,6 +56,7 @@ try {
   const data = JSON.parse(fs.readFileSync(DATABASE_FILE));
   users = data.users;
   cards = data.cards;
+  decks = data.decks;
 } catch {
   console.log('WARNING: No database found, create a new one');
   save();
@@ -64,6 +68,7 @@ try {
 
 const newUserId = () => generateId(Object.keys(users));
 const newCardId = () => generateId(Object.keys(cards));
+const newDeckId = () => generateId(Object.keys(decks));
 
 // wrapper for asynchronous function management - function needing thread-safe operation is passed in
 const dataLock = callback => new Promise((resolve, reject) => {
@@ -92,6 +97,7 @@ const generateId = (currentList, max = 999999) => {
  */
 export const getUserIdFromAuthorization = authorization => {
   // Note: Authorization header comes in the format: 'Bearer myToken'
+  console.log("Service - getUserIdFromAuth:", authorization)
   const token = authorization.replace('Bearer ', '');
   try {
     const { userId, } = jwt.verify(token, JWT_KEY);
@@ -139,6 +145,7 @@ export const register = (email, password, name) => dataLock((resolve, reject) =>
     password,
     image: null,
     admin: Object.keys(users).length === 0 ? true : false,
+    decks: [],
   };
   resolve({
     token: jwt.sign({ userId, }, JWT_KEY, { algorithm: 'HS256', }),
@@ -147,19 +154,34 @@ export const register = (email, password, name) => dataLock((resolve, reject) =>
 });
 
 /***************************************************************
-                       Subjects Functions
+                       Deck Functions
 ***************************************************************/
 
-export const getSubjects = (authUserId) =>
-  userLock((resolve, reject) => {
-    resolve(users[authUserId].subjects);
+export const getDecks = (authUserId) =>
+  dataLock((resolve, reject) => {
+    resolve(users[authUserId].decks);
   });
 
-export const setSubjects = (authUserId, subjects) =>
-  userLock((resolve, reject) => {
-    users[authUserId].subjects = subjects;
+export const setDecks = (authUserId, newDecks) =>
+  dataLock((resolve, reject) => {
+    users[authUserId].decks = newDecks;
     resolve();
   });
+
+  export const createDeck = (authUserId, title) =>
+    dataLock((resolve, reject) => {
+      // console.log('Current decks', users[authUserId].decks);
+      const deckLen = users[authUserId].decks.length;
+      const curDate = new Date()
+      const newDeck = {
+        id: newDeckId(),
+        title: title,
+        createdAt: new Date().toLocaleString(),
+        numCards: '0',
+      }
+      users[authUserId].decks[deckLen] = (newDeck);
+      resolve();
+    });
 
 /***************************************************************
                          User Functions

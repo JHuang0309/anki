@@ -1,21 +1,27 @@
 {
   "users": {
-    "244757": {
-      "email": "kcwfong@gmail.com",
-      "name": "kirsten",
-      "password": "anki",
-      "image": null,
-      "admin": true,
-      "sessionActive": false
-    },
-    "962556": {
+    "773163": {
       "email": "test@gmail.com",
-      "name": "test",
+      "name": "Jimbo",
       "password": "123",
       "image": null,
-      "admin": false,
-      "sessionActive": false
+      "admin": true,
+      "decks": [
+        {
+          "id": 950139,
+          "title": "Japan",
+          "createdAt": "2/9/2025, 2:13:12 AM",
+          "numCards": 0
+        },
+        {
+          "id": 467754,
+          "title": "COMP3331",
+          "createdAt": "2/9/2025, 2:13:30 AM",
+          "numCards": 0
+        }
+      ]
     }
   },
-  "cards": {}
+  "cards": {},
+  "decks": {}
 }

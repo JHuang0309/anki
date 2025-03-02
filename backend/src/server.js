@@ -23,8 +23,9 @@ import {
     userGet,
     userAdminChange,
     userUpdate,
-    getSubjects,
-    setSubjects,
+    getDecks,
+    setDecks,
+    createDeck,
   } from './service';
 
 const app = express()
@@ -82,7 +83,7 @@ app.post(
     "/admin/auth/logout",
     performRequest(
         authed(async (req, res, email) => {
-          console.log("Server logout", email)
+          console.log("Server logout", email);
           await logout(email);
           return res.json({});
         })
@@ -90,28 +91,39 @@ app.post(
 );
 
 /***************************************************************
-                    Subject Functions
+                    Deck Functions
 ***************************************************************/
 
 app.get(
-    "/subjects",
+    "/decks",
     performRequest(
       authed(async (req, res, authUserId) => {
-        const subjects = await getSubjects(authUserId);
-        return res.json({ subjects });
+        const decks = await getDecks(authUserId);
+        return res.json({ decks });
       })
     )
   );
 
 app.put(
-    "/subjects",
+    "/decks",
     performRequest(
         authed(async (req, res, authUserId) => {
-          await setSubjects(authUserId, req.body.subjects);
+          await setDecks(authUserId, req.body.decks);
           return res.json({});
         })
     )
 );
+
+app.post(
+  "/create/deck",
+  performRequest(
+      authed(async (req, res, authUserId) => {
+        await createDeck(authUserId, req.body.title);
+        return res.json({});
+      })
+  )
+);
+
 
 /***************************************************************
                     User Functions
