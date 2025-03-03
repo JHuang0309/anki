@@ -95,13 +95,21 @@ const PageDashboard = ({ token, setTokenFn}) => {
         <h3 className="text-xl font-semibold text-left mb-2">Deck Library</h3>
           <ul role="list" className="divide-y divide-gray-100">
             {decks.map((deck) => (
-              <li key={deck.id} className="flex justify-between gap-x-6 py-5">
+              <li key={deck.id} className="flex justify-between gap-x-6 py-5 px-5 hover:bg-gray-100 transition-all duration-300 ease-in-out rounded-md">
                 <div className="flex min-w-0 gap-x-4">
                   <div className="min-w-0 flex-auto text-left">
                     <p className="text-sm/6 font-semibold text-gray-900">
                     <a 
                       href="#" 
                       className="text-gray-900 hover:text-[#2563eb] hover:underline"
+                      onClick={() => {
+                        const data = {
+                          title: deck.title,
+                          id: deck.id,
+                        }
+                        const queryString = new URLSearchParams(data).toString();
+                        navigate(`/edit?${queryString}`)
+                      }}
                     >
                       {deck.title}
                     </a>

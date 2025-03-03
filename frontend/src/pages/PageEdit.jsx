@@ -120,14 +120,21 @@ const PageEdit = ({ token, setTokenFn}) => {
                     <button className='text-sm text-grey-400 hover:text-red-800' >Delete Deck</button>
                 </div>
                 <hr className="border-t border-gray-300 my-4"/>
+                <h3 className="text-xl font-semibold text-left mb-2">View Deck</h3>
+                <button 
+                  className="w-full bg-blue-100 text-blue-700 font-bold py-3 px-4 rounded-md transition duration-200 hover:bg-blue-200 mb-5"
+                  onClick={() => console.log("TODO")}
+                  >
+                  Shuffle and Play
+                </button>
+                <div className='my-4'>
+                <h3 className="text-xl font-semibold text-left mb-2">Your Cards</h3>
                 <div>
                     <button
                         className="w-full bg-white text-blue-700 font-bold py-3 px-4 rounded-md transition duration-200 hover:bg-blue-200 border"
                         onClick={createCard}
                     >Create new question card</button>
                 </div>
-                <div className='my-4'>
-                <h3 className="text-xl font-semibold text-left mb-2">Your Cards</h3>
                 <ul role="list" className="divide-y divide-gray-100">
                     {cards.map((card) => (
                     <li key={card.id} className="flex justify-between gap-x-6 py-5">
