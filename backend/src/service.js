@@ -146,6 +146,7 @@ export const register = (email, password, name) => dataLock((resolve, reject) =>
     image: null,
     admin: Object.keys(users).length === 0 ? true : false,
     decks: [],
+    cards: [],
   };
   resolve({
     token: jwt.sign({ userId, }, JWT_KEY, { algorithm: 'HS256', }),
@@ -181,7 +182,34 @@ export const setDecks = (authUserId, newDecks) =>
       }
       users[authUserId].decks[deckLen] = (newDeck);
       resolve();
-    });
+  });
+
+/***************************************************************
+                       Card Functions
+***************************************************************/
+
+export const getCards = (authUserId, deckId) =>
+  dataLock((resolve, reject) => {
+    resolve(users[authUserId].cards.filter(c => c.deckId === deckId));
+  });
+
+export const createCard = (authUserId, cardDetails) =>
+  dataLock((resolve, reject) => {
+    const newCard = {
+      id: newCardId(),
+      title: cardDetails.title,
+      topic: cardDetails.topic,
+      difficulty: cardDetails.difficulty,
+      type: cardDetails.type,
+      desc: cardDetails.desc,
+      answer: cardDetails.answer,
+      deckId: cardDetails.deckId,
+      createdAt: new Date().toLocaleString(),
+    }
+    const cardsLen = users[authUserId].cards.length;
+    users[authUserId].cards[cardsLen] = (newCard);
+    resolve();
+});
 
 /***************************************************************
                          User Functions

@@ -12,76 +12,103 @@ const PageEdit = ({ token, setTokenFn}) => {
     const [title, setTitle] = useState(queryParams.get("title"))
     const [id, setId] = useState(queryParams.get("id"))
     const [showModal, setShowModal] = useState(false);
+    const [cards, setCards] = useState([]);
 
-    const test_cards = [
-        {
-            id: '1',
-          title: 'What is the capital of Japan',
-          createdAt: '2024-01-22T13:23Z',
-          type: 'Multiple Choice',
-          difficulty: 'Easy',
-        },
-        {
-            id: '2',
-            title: 'What is the iconic dish of Japan',
-            createdAt: '2024-01-22T13:23Z',
-            type: 'Multiple Choice',
-            difficulty: 'Medium',
+    const fetchCards = () => {
+      axios.get('http://localhost:5005/cards', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Example token retrieval
           },
-          {
-            id: '3',
-            title: 'Create an itinerary for Japan',
-            createdAt: '2024-01-22T13:23Z',
-            type: 'Short Answer',
-            difficulty: 'Easy',
-          },
-          {
-            id: '4',
-            title: 'Explain the reasoning behind the falling yen',
-            createdAt: '2024-01-22T13:23Z',
-            type: 'Short Answer',
-            difficulty: 'Hard',
-          },
-
-    ]
-
-    const createCard = () => {
-        setShowModal(true);
-      }
-
-    const closeModal = () => {
-    setShowModal(false);
+          params: { deckId: id },
+      })
+      .then(res => {
+        setCards(res.data.cards);
+      })
+      .catch(res => {
+        console.error("Unexpected error:", res);
+      })
     }
 
-    const createNewCard = (title, cardObject) => {
-    //     // console.log('New deck title', title);
-    //     // Perform a put request
-    //     axios.post('http://localhost:5005/create/card', 
-    //       {
-    //         question: cardObject.question,
-    //         answer: cardObject.answer,
+    // const test_cards = [
+    //     {
+    //         id: '1',
+    //       title: 'What is the capital of Japan',
+    //       createdAt: '2024-01-22T13:23Z',
+    //       type: 'Multiple Choice',
+    //       difficulty: 'Easy',
+    //     },
+    //     {
+    //         id: '2',
+    //         title: 'What is the iconic dish of Japan',
+    //         createdAt: '2024-01-22T13:23Z',
+    //         type: 'Multiple Choice',
+    //         difficulty: 'Medium',
     //       },
     //       {
-    //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    //       }
-    //     )
-    //     .then(()=> {
-    //       loadUserData();
-    //       closeModal();
-    //     })
-    //     .catch(res => {
-    //       console.error("Unexpected error:", res);
-    //       // setAlertType('error');
-    //       // setAlertMsg(res.response.data.error);
-    //       // setShowAlert(true);
-    //     })
+    //         id: '3',
+    //         title: 'Create an itinerary for Japan',
+    //         createdAt: '2024-01-22T13:23Z',
+    //         type: 'Short Answer',
+    //         difficulty: 'Easy',
+    //       },
+    //       {
+    //         id: '4',
+    //         title: 'Explain the reasoning behind the falling yen',
+    //         createdAt: '2024-01-22T13:23Z',
+    //         type: 'Short Answer',
+    //         difficulty: 'Hard',
+    //       },
+
+    // ]
+
+    const createCard = () => {
+      setShowModal(true);
     }
+
+    const closeModal = () => {
+      setShowModal(false);
+    }
+
+    const createNewCard = (cardObject) => {
+      // console.log('New card title', cardObject.title);
+      // Perform a put request
+      axios.post('http://localhost:5005/create/card', 
+        {
+          title: cardObject.title,
+          topic: cardObject.topic,
+          difficulty: cardObject.difficulty,
+          type: cardObject.type,
+          desc: cardObject.desc,
+          answer: cardObject.answer,
+          deckId: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then(()=> {
+        closeModal();
+        fetchCards();
+      })
+      .catch(res => {
+        console.error("Unexpected error:", res);
+        // setAlertType('error');
+        // setAlertMsg(res.response.data.error);
+        // setShowAlert(true);
+      })
+    }
+
+    // UseEffects
+
+    useEffect(() => {
+        fetchCards();
+    }, []);
 
     const mainStyle= { margin: '3em', marginTop: '1em'};
 	return (
 		<>
         {showModal && 
-            <Modal closeModal={closeModal} createDeck={createNewCard}/>
+            <Modal closeModal={closeModal} createCard={createNewCard} deckId={id}/>
         }
             <main style={mainStyle}>
                 <div className='flex justify-between'>
@@ -102,7 +129,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                 <div className='my-4'>
                 <h3 className="text-xl font-semibold text-left mb-2">Your Cards</h3>
                 <ul role="list" className="divide-y divide-gray-100">
-                    {test_cards.map((card) => (
+                    {cards.map((card) => (
                     <li key={card.id} className="flex justify-between gap-x-6 py-5">
                         <div className="flex min-w-0 gap-x-4">
                         <div className="min-w-0 flex-auto text-left">
@@ -131,12 +158,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                             <button 
                             className='text-sm hover:text-[#2563eb]'
                             onClick={() => {
-                                const data = {
-                                title: deck.title,
-                                id: deck.id,
-                                }
-                                const queryString = new URLSearchParams(data).toString();
-                                navigate(`/edit?${queryString}`)
+                              console.log("TODO")
                             }}
                             >Edit</button>
                         </div>

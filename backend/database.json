@@ -1,6 +1,6 @@
 {
   "users": {
-    "773163": {
+    "683965": {
       "email": "test@gmail.com",
       "name": "Jimbo",
       "password": "123",
@@ -8,16 +8,67 @@
       "admin": true,
       "decks": [
         {
-          "id": 950139,
+          "id": 436251,
           "title": "Japan",
-          "createdAt": "2/9/2025, 2:13:12 AM",
-          "numCards": 0
+          "createdAt": "3/4/2025, 1:36:06 AM",
+          "numCards": "0"
+        }
+      ],
+      "cards": [
+        {
+          "id": 818565,
+          "title": "Test",
+          "topic": "test",
+          "difficulty": "easy",
+          "type": "MC",
+          "desc": "test",
+          "answer": "test",
+          "deckId": "436251",
+          "createdAt": "3/4/2025, 1:36:25 AM"
         },
         {
-          "id": 467754,
-          "title": "COMP3331",
-          "createdAt": "2/9/2025, 2:13:30 AM",
-          "numCards": 0
+          "id": 531279,
+          "title": "Test 2",
+          "topic": "Another",
+          "difficulty": "Hard",
+          "type": "LR",
+          "desc": "test",
+          "answer": "test",
+          "deckId": "436251",
+          "createdAt": "3/4/2025, 1:39:03 AM"
+        },
+        {
+          "id": 167219,
+          "title": "Test 3",
+          "topic": "1",
+          "difficulty": "Medium",
+          "type": "SA",
+          "desc": "1",
+          "answer": "1",
+          "deckId": "436251",
+          "createdAt": "3/4/2025, 1:40:09 AM"
+        },
+        {
+          "id": 750679,
+          "title": "Test 4",
+          "topic": "4",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "er",
+          "answer": "sdf",
+          "deckId": "436251",
+          "createdAt": "3/4/2025, 1:41:28 AM"
+        },
+        {
+          "id": 250091,
+          "title": "Test 5",
+          "topic": "Testing",
+          "difficulty": "Hard",
+          "type": "LR",
+          "desc": "Hello",
+          "answer": "Please",
+          "deckId": "436251",
+          "createdAt": "3/4/2025, 1:44:42 AM"
         }
       ]
     }

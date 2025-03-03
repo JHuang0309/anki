@@ -26,6 +26,8 @@ import {
     getDecks,
     setDecks,
     createDeck,
+    getCards,
+    createCard,
   } from './service';
 
 const app = express()
@@ -124,6 +126,30 @@ app.post(
   )
 );
 
+/***************************************************************
+                    Card Functions
+***************************************************************/
+
+app.get(
+  "/cards",
+  performRequest(
+    authed(async (req, res, authUserId) => {
+      const deckId = req.query.deckId;
+      const cards = await getCards(authUserId, deckId);
+      return res.json({ cards });
+    })
+  )
+);
+
+app.post(
+  "/create/card",
+  performRequest(
+      authed(async (req, res, authUserId) => {
+        await createCard(authUserId, req.body);
+        return res.json({});
+      })
+  )
+);
 
 /***************************************************************
                     User Functions

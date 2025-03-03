@@ -24,7 +24,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
       },
     })
       .then(res => {
-        console.log("It worked:", res);
+        // console.log("It worked:", res);
         setUserName(res.data.name)
         setDecks(res.data.decks)
       })
