@@ -173,7 +173,6 @@ export const setDecks = (authUserId, newDecks) =>
     dataLock((resolve, reject) => {
       // console.log('Current decks', users[authUserId].decks);
       const deckLen = users[authUserId].decks.length;
-      const curDate = new Date()
       const newDeck = {
         id: newDeckId(),
         title: title,
@@ -184,13 +183,26 @@ export const setDecks = (authUserId, newDecks) =>
       resolve();
   });
 
+  export const deleteDeck = (authUserId, deckId) => {
+    dataLock((resolve, reject) => {
+      users[authUserId].decks = users[authUserId].decks.filter(d => d.id === deckId);
+      resolve();
+    });
+  }
+
 /***************************************************************
                        Card Functions
 ***************************************************************/
 
 export const getCards = (authUserId, deckId) =>
   dataLock((resolve, reject) => {
-    resolve(users[authUserId].cards.filter(c => c.deckId === deckId));
+    resolve(users[authUserId].cards.filter(c => c.deckId === deckId).reverse());
+  });
+
+  export const getCard = (authUserId, cardId) =>
+    dataLock((resolve, reject) => {
+
+      resolve(users[authUserId].cards.filter(c => c.id === Number(cardId)));
   });
 
 export const createCard = (authUserId, cardDetails) =>
@@ -210,6 +222,29 @@ export const createCard = (authUserId, cardDetails) =>
     users[authUserId].cards[cardsLen] = (newCard);
     resolve();
 });
+
+export const updateCard = (authUserId, cardDetails) => {
+  dataLock((resolve, reject) => {
+    const userCards = users[authUserId].cards;
+    const cardIndex = userCards.findIndex(c => c.id === Number(cardDetails.id));
+    if (cardIndex === -1) {
+      return reject(new Error("Card not found"));
+    }
+    // Update card fields
+    users[authUserId].cards[cardIndex] = { 
+      ...users[authUserId].cards[cardIndex], 
+      ...cardDetails 
+    };
+
+    resolve(users[authUserId].cards[cardIndex]);
+})};
+
+export const deleteCard = (authUserId, cardId) => {
+  dataLock((resolve, reject) => {
+    users[authUserId].cards = users[authUserId].cards.filter(c => c.id !== Number(cardId));
+    resolve();
+  });
+}
 
 /***************************************************************
                          User Functions

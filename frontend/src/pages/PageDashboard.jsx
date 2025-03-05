@@ -5,8 +5,7 @@ import axios from 'axios';
 // Component imports
 
 import Modal from '../components/DeckModal';
-
-// import Header from '../components/Header.jsx';
+import AlertModal from '../components/AlertModal';
 
 const PageDashboard = ({ token, setTokenFn}) => {
 
@@ -15,6 +14,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
   const [userName, setUserName] = useState('');
   const [decks, setDecks] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
 
   // functions
   const loadUserData = () => {
@@ -39,8 +39,6 @@ const PageDashboard = ({ token, setTokenFn}) => {
   }
 
   const createNewDeck = (title) => {
-    // console.log('New deck title', title);
-    // Perform a put request
     axios.post('http://localhost:5005/create/deck', 
       {
         title: title,
@@ -61,8 +59,28 @@ const PageDashboard = ({ token, setTokenFn}) => {
     })
   }
 
+  const deleteDeck = (id) => {
+    axios.delete('http://localhost:5005/delete/deck', 
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        params: { deckId: id },
+      },
+    )
+    .then(()=> {
+      closeModal();
+      loadUserData();
+    })
+    .catch(res => {
+      console.error("Unexpected error:", res);
+      // setAlertType('error');
+      // setAlertMsg(res.response.data.error);
+      // setShowAlert(true);
+    })
+  }
+
   const closeModal = () => {
     setShowModal(false);
+    setShowAlertModal(false);
   }
 
   // UseEffects
@@ -77,6 +95,9 @@ const PageDashboard = ({ token, setTokenFn}) => {
 		<>
     {showModal && 
       <Modal closeModal={closeModal} createDeck={createNewDeck}/>
+    }
+    {showAlertModal && 
+      <AlertModal closeModal={closeModal} deleteFunc={deleteDeck}/>
     }
       <h1 className="text-left mx-6 text-2xl px-4 font-semibold">
         Hi <span className='text-[#2563eb]'>{userName}</span>, welcome back to Anki!
@@ -100,7 +121,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
                   <div className="min-w-0 flex-auto text-left">
                     <p className="text-sm/6 font-semibold text-gray-900">
                     <a 
-                      href="#" 
+                      href="#"
                       className="text-gray-900 hover:text-[#2563eb] hover:underline"
                       onClick={() => {
                         const data = {
@@ -141,7 +162,10 @@ const PageDashboard = ({ token, setTokenFn}) => {
                     >Edit</button>
                   </div>
                   <div className="shrink-0 sm:flex sm:flex-col">
-                    <button className='text-gray-400 text-sm hover:text-red-800'>Delete</button>
+                    <button 
+                      className='text-gray-400 text-sm hover:text-red-800'
+                      onClick={() => setShowAlertModal(true)}
+                      >Delete</button>
                   </div>
                 </div>
               </li>

@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import Alert from '../components/Alert.jsx';
 import Modal from '../components/CardModal';
+import AlertModal from '../components/AlertModal.jsx';
 
 const PageEdit = ({ token, setTokenFn}) => {
     const navigate = useNavigate();
@@ -11,8 +12,11 @@ const PageEdit = ({ token, setTokenFn}) => {
     const queryParams = new URLSearchParams(location.search);
     const [title, setTitle] = useState(queryParams.get("title"))
     const [id, setId] = useState(queryParams.get("id"))
+    const [cardId, setCardId] = useState(null)
     const [showModal, setShowModal] = useState(false);
     const [cards, setCards] = useState([]);
+    const [showAlertModal, setShowAlertModal] = useState(false);
+    const [modalType, setModalType] = useState('Create');
 
     const fetchCards = () => {
       axios.get('http://localhost:5005/cards', {
@@ -29,44 +33,38 @@ const PageEdit = ({ token, setTokenFn}) => {
       })
     }
 
-    // const test_cards = [
-    //     {
-    //         id: '1',
-    //       title: 'What is the capital of Japan',
-    //       createdAt: '2024-01-22T13:23Z',
-    //       type: 'Multiple Choice',
-    //       difficulty: 'Easy',
-    //     },
-    //     {
-    //         id: '2',
-    //         title: 'What is the iconic dish of Japan',
-    //         createdAt: '2024-01-22T13:23Z',
-    //         type: 'Multiple Choice',
-    //         difficulty: 'Medium',
-    //       },
-    //       {
-    //         id: '3',
-    //         title: 'Create an itinerary for Japan',
-    //         createdAt: '2024-01-22T13:23Z',
-    //         type: 'Short Answer',
-    //         difficulty: 'Easy',
-    //       },
-    //       {
-    //         id: '4',
-    //         title: 'Explain the reasoning behind the falling yen',
-    //         createdAt: '2024-01-22T13:23Z',
-    //         type: 'Short Answer',
-    //         difficulty: 'Hard',
-    //       },
-
-    // ]
-
-    const createCard = () => {
+    const showCardModal = () => {
       setShowModal(true);
     }
 
+    const createCard = () => {
+      setCardId(null);
+      setShowModal(true);
+    }
+
+    const deleteCard = () => {
+      axios.delete('http://localhost:5005/delete/card', 
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          params: { cardId: cardId },
+        },
+      )
+      .then(()=> {
+        closeModal();
+        fetchCards();
+      })
+      .catch(res => {
+        console.error("Unexpected error:", res);
+        // setAlertType('error');
+        // setAlertMsg(res.response.data.error);
+        // setShowAlert(true);
+      })
+    }
+
     const closeModal = () => {
+      setModalType('Create')
       setShowModal(false);
+      setShowAlertModal(false);
     }
 
     const createNewCard = (cardObject) => {
@@ -98,6 +96,38 @@ const PageEdit = ({ token, setTokenFn}) => {
       })
     }
 
+    const updateCard = (cardObject) => {
+      axios.put('http://localhost:5005/update/card', 
+        {
+          id: cardObject.id,
+          title: cardObject.title,
+          topic: cardObject.topic,
+          difficulty: cardObject.difficulty,
+          type: cardObject.type,
+          desc: cardObject.desc,
+          answer: cardObject.answer,
+          deckId: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then(()=> {
+        closeModal();
+        fetchCards();
+      })
+      .catch(res => {
+        console.error("Unexpected error:", res);
+        // setAlertType('error');
+        // setAlertMsg(res.response.data.error);
+        // setShowAlert(true);
+      })
+    }
+
+    const showCard = () => {
+      console.log("TODO - show card in view / play mode")
+    }
+
     // UseEffects
 
     useEffect(() => {
@@ -108,7 +138,10 @@ const PageEdit = ({ token, setTokenFn}) => {
 	return (
 		<>
         {showModal && 
-            <Modal closeModal={closeModal} createCard={createNewCard} deckId={id}/>
+            <Modal closeModal={closeModal} createCard={createNewCard} updateCard={updateCard} deckId={id} cardId={cardId} modalType={modalType}/>
+        }
+        {showAlertModal && 
+              <AlertModal closeModal={closeModal} deleteFunc={deleteCard}/>
         }
             <main style={mainStyle}>
                 <div className='flex justify-between'>
@@ -141,15 +174,17 @@ const PageEdit = ({ token, setTokenFn}) => {
                         <div className="flex min-w-0 gap-x-4">
                         <div className="min-w-0 flex-auto text-left">
                             <p className="text-sm/6 font-semibold text-gray-900">
-                            <a 
-                            href="#" 
-                            className="text-gray-900 hover:text-[#2563eb] hover:underline"
+                            <div
+                            onClick={showCard}
+                            className="text-gray-900 hover:text-[#2563eb] hover:cursor-pointer"
                             >
-                            {card.title}
-                            </a>
+                            <span
+                              className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'
+                            >{card.topic}</span> {card.title}
+                            </div>
                             </p>
                             <p className="mt-1 truncate text-xs/5 text-gray-500">
-                            Created at <time dateTime={card.createdAt}>
+                            Created on <time dateTime={card.createdAt}>
                             {new Date(card.createdAt).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
@@ -165,12 +200,20 @@ const PageEdit = ({ token, setTokenFn}) => {
                             <button 
                             className='text-sm hover:text-[#2563eb]'
                             onClick={() => {
-                              console.log("TODO")
+                              setCardId(card.id);
+                              setModalType('Save')
+                              showCardModal();
                             }}
                             >Edit</button>
                         </div>
                         <div className="shrink-0 sm:flex sm:flex-col">
-                            <button className='text-gray-400 text-sm hover:text-red-800'>Delete</button>
+                            <button 
+                              className='text-gray-400 text-sm hover:text-red-800'
+                              onClick={() => {
+                                setCardId(card.id);
+                                setShowAlertModal(true)
+                              }}
+                              >Delete</button>
                         </div>
                         </div>
                     </li>

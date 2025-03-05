@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import axios from 'axios';
+import { Description, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 
-const Modal = ({ closeModal, createCard, deckId }) => {
+const Modal = ({ closeModal, createCard, updateCard, deckId, cardId, modalType }) => {
 
     const [isOpen, setIsOpen] = useState(true);
     const [title, setTitle] = useState('');
     const [topic, setTopic] = useState('');
     const [difficulty, setDifficulty] = useState('Easy');
-    const [type, setType] = useState('MC');
+    const [type, setType] = useState('multiple-choice');
     const [desc, setDesc] = useState('');
     const [answer, setAnswer] = useState('');
 
     const handleCreateCard = () => {
-        // console.log(title, topic, difficulty, type, desc, answer);
         const cardDetails = {
             title: title,
             topic: topic,
             difficulty: difficulty,
-            type: type,
+            type: formatCardType(type),
             desc: desc,
             answer: answer,
             deckId: deckId,
@@ -25,15 +25,67 @@ const Modal = ({ closeModal, createCard, deckId }) => {
         createCard(cardDetails);
     }
 
-    const setCardType = (type) => {
+    const handleUpdateCard = () => {
+      const cardDetails = {
+          id: cardId,
+          title: title,
+          topic: topic,
+          difficulty: difficulty,
+          type: formatCardType(type),
+          desc: desc,
+          answer: answer,
+          deckId: deckId,
+      }
+      updateCard(cardDetails);
+  }
+
+    const formatCardType = (type) => {
         if (type === 'multiple-choice') {
-            setType('MC');
+            return('MC');
         } else if (type === 'short-answer') {
-            setType('SA');
+            return('SA');
         } else {
-            setType('LR');
+            return('LR');
         }
     }
+
+    const rawCardType = (type) => {
+      if (type === 'MC') {
+          return('multiple-choice');
+      } else if (type === 'SA') {
+          return('short-answer');
+      } else {
+          return('long-response');
+      }
+  }
+
+    const populateModal = () => {
+      axios.get('http://localhost:5005/card', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        params: { cardId: cardId },
+      })
+        .then(res => {
+          const card = res.data.card[0]
+          setTitle(card.title)
+          setTopic(card.topic)
+          setDifficulty(card.difficulty)
+          setType(rawCardType(card.type))
+          setDesc(card.desc)
+          setAnswer(card.answer)
+        })
+        .catch(res => {
+          console.error("Unexpected error:", res);
+        })
+    }
+
+    useEffect(() => {
+        // populate card if cardId not null
+        if (cardId) {
+          populateModal();
+        }
+    }, [])
 
     return (
         <Dialog open={isOpen} onClose={closeModal} className="relative z-10">
@@ -60,6 +112,7 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                             id='title'
                             name='title'
                             type='text'
+                            defaultValue={title}
                             placeholder='Write your question here'
                             onChange={e => setTitle(e.target.value)}
                             className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-inset focus:ring-[#2563eb] sm:text-sm/6"
@@ -74,8 +127,9 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                     id="topic"
                     name="topic"
                     type="text"
+                    defaultValue={topic}
                     onChange={e => setTopic(e.target.value)}
-                    className="block px-3.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    className="block px-3.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm/6"
                     />
                 </div>
                 <div className='sm:col-span-2'>
@@ -86,7 +140,8 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                     id="difficulty"
                     name="difficulty"
                     onChange={e => setDifficulty(e.target.value)}
-                    className="block px-1.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    value={difficulty}
+                    className="block px-1.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm/6"
                     >
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
@@ -100,8 +155,9 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                     <select
                     id="type"
                     name="type"
-                    onChange={e => setCardType(e.target.value)}
-                    className="block px-1.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
+                    onChange={e => setType(e.target.value)}
+                    value={type}
+                    className="block px-1.5 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm/6"
                     >
                         <option value="multiple-choice">Multiple Choice</option>
                         <option value="short-answer">Short Answer</option>
@@ -117,8 +173,8 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                     name="description"
                     type="textarea"
                     rows={4}
-                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
-                    defaultValue={''}
+                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm/6"
+                    defaultValue={desc}
                     onChange={e => setDesc(e.target.value)}
                     placeholder="Enter additional question text here..."
                     />
@@ -132,8 +188,8 @@ const Modal = ({ closeModal, createCard, deckId }) => {
                     name="answer"
                     type="textarea"
                     rows={5}
-                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#e4627d] sm:text-sm/6"
-                    defaultValue={''}
+                    className="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm/6"
+                    defaultValue={answer}
                     onChange={e => setAnswer(e.target.value)}
                     placeholder="Write the correct answer here..."
                     />
@@ -144,10 +200,10 @@ const Modal = ({ closeModal, createCard, deckId }) => {
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-between">
                 <button
                   type="button"
-                  onClick={() => handleCreateCard()}
+                  onClick={modalType === "Create" ? handleCreateCard : handleUpdateCard}
                   className="inline-flex w-full justify-center rounded-md bg-[#2563eb] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3b82f6] sm:w-auto"
                 >
-                  Create
+                  {modalType}
                 </button>
                 <button
                   type="button"

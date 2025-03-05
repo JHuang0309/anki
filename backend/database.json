@@ -8,67 +8,45 @@
       "admin": true,
       "decks": [
         {
-          "id": 436251,
-          "title": "Japan",
-          "createdAt": "3/4/2025, 1:36:06 AM",
+          "id": 197472,
+          "title": "Test",
+          "createdAt": "3/5/2025, 10:38:39 PM",
           "numCards": "0"
         }
       ],
       "cards": [
         {
-          "id": 818565,
-          "title": "Test",
-          "topic": "test",
-          "difficulty": "easy",
-          "type": "MC",
-          "desc": "test",
-          "answer": "test",
-          "deckId": "436251",
-          "createdAt": "3/4/2025, 1:36:25 AM"
-        },
-        {
-          "id": 531279,
-          "title": "Test 2",
-          "topic": "Another",
-          "difficulty": "Hard",
-          "type": "LR",
-          "desc": "test",
-          "answer": "test",
-          "deckId": "436251",
-          "createdAt": "3/4/2025, 1:39:03 AM"
-        },
-        {
-          "id": 167219,
-          "title": "Test 3",
-          "topic": "1",
+          "id": 910945,
+          "title": "qweew1",
+          "topic": "ewrwr",
           "difficulty": "Medium",
           "type": "SA",
-          "desc": "1",
-          "answer": "1",
-          "deckId": "436251",
-          "createdAt": "3/4/2025, 1:40:09 AM"
+          "desc": "werewr",
+          "answer": "werew",
+          "deckId": "197472",
+          "createdAt": "3/5/2025, 11:14:58 PM"
         },
         {
-          "id": 750679,
-          "title": "Test 4",
-          "topic": "4",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "er",
-          "answer": "sdf",
-          "deckId": "436251",
-          "createdAt": "3/4/2025, 1:41:28 AM"
-        },
-        {
-          "id": 250091,
-          "title": "Test 5",
-          "topic": "Testing",
+          "id": 778987,
+          "title": "dasfasf",
+          "topic": "adsfadsf",
           "difficulty": "Hard",
           "type": "LR",
-          "desc": "Hello",
-          "answer": "Please",
-          "deckId": "436251",
-          "createdAt": "3/4/2025, 1:44:42 AM"
+          "desc": "adsfsfds",
+          "answer": "asdfdsaf",
+          "deckId": "197472",
+          "createdAt": "3/5/2025, 11:26:10 PM"
+        },
+        {
+          "id": 366774,
+          "title": "QAsssup",
+          "topic": "Japan",
+          "difficulty": "Hard",
+          "type": "SA",
+          "desc": "adsfs",
+          "answer": "adsfsdf",
+          "deckId": "197472",
+          "createdAt": "3/5/2025, 11:42:16 PM"
         }
       ]
     }
