@@ -3,6 +3,10 @@
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "start": "vite"
+  },
+  "devDependencies": {
+    "vite": "^6.2.1"
   }
 }
