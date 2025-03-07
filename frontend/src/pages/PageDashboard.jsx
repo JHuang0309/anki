@@ -95,6 +95,12 @@ const PageDashboard = ({ token, setTokenFn}) => {
     }
   }, [deckId])
 
+  useEffect(() => {
+    if (!token && localStorage.getItem('token') == null) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
 
   // Component Styles
   const mainStyle= { margin: '3em'};
@@ -107,7 +113,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
       <AlertModal closeModal={closeModal} deleteFunc={() => deleteDeck(deckId)}/>
     }
       <h1 className="text-left mx-6 text-2xl px-4 font-semibold">
-        Hi <span className='text-[#2563eb]'>{userName}</span>, welcome back to Anki!
+        Hi <span className='text-[#2563eb]'>{userName}</span>, welcome back to Decki!
       </h1>
       <main style={mainStyle}>
         <div className='mb-5'>

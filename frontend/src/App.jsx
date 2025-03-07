@@ -31,10 +31,6 @@ function App() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   fetch("/subjects").then(res => res.json()).then(data => setBackend(data))
-  // }, [])
-
   return (
     <>
       <BrowserRouter>
