@@ -22,12 +22,6 @@
           "title": "ATest",
           "createdAt": "3/7/2025, 11:03:31 PM",
           "numCards": "0"
-        },
-        {
-          "id": 609518,
-          "title": "sdfsf",
-          "createdAt": "3/7/2025, 11:07:21 PM",
-          "numCards": "0"
         }
       ],
       "cards": [
@@ -78,13 +72,46 @@
         {
           "id": 675330,
           "title": "What is the chemical formula for water?",
-          "topic": "Nomenclature",
+          "topic": "Chemistry",
           "difficulty": "Easy",
           "type": "SA",
           "desc": "Water is a molecule composed of two hydrogen atoms bonded to one oxygen atom.",
           "answer": "H₂O",
           "deckId": "542173",
           "createdAt": "3/7/2025, 11:14:16 PM"
+        },
+        {
+          "id": 860995,
+          "title": "What is the atomic number of carbon?",
+          "topic": "Chemistry",
+          "difficulty": "Easy",
+          "type": "SA",
+          "desc": "This question tests knowledge of the periodic table and the atomic number of an element.",
+          "answer": "6",
+          "deckId": "542173",
+          "createdAt": "3/8/2025, 12:40:58 AM"
+        },
+        {
+          "id": 922147,
+          "title": "What is the most common gas in Earth's atmosphere?",
+          "topic": "Earth Science",
+          "difficulty": "Easy",
+          "type": "SA",
+          "desc": "This is a basic question about Earth's atmosphere and its composition.",
+          "answer": "Nitrogen (78%)",
+          "deckId": "542173",
+          "createdAt": "3/8/2025, 12:41:35 AM"
+        },
+        {
+          "id": 653438,
+          "title": "What is the process by which plants make their own food using sunlight?",
+          "topic": "Biology",
+          "difficulty": "Medium",
+          "type": "MC",
+          "desc": "A) Synthesization\nB) Photosynthesis\nC) Photolysis\nD) Phototropism",
+          "answer": "B) Photosynthesis",
+          "deckId": "542173",
+          "createdAt": "3/8/2025, 12:42:57 AM"
         }
       ]
     }
