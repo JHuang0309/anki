@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Alert from '../components/Alert.jsx';
 import Modal from '../components/CardModal';
 import AlertModal from '../components/AlertModal.jsx';
+import ViewCardModal from '../components/ViewCardModal.jsx';
 
 const PageEdit = ({ token, setTokenFn}) => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const PageEdit = ({ token, setTokenFn}) => {
     const [modalType, setModalType] = useState('Create')
     const [deleteFun, setDeleteFun] = useState(null)
     const [cardId, setCardId] = useState(null)
+    const [viewCard, setViewCard] = useState(false);
 
     const fetchCards = () => {
       axios.get('http://localhost:5005/cards', {
@@ -85,8 +87,10 @@ const PageEdit = ({ token, setTokenFn}) => {
       setModalType('Create');
       setShowModal(false);
       setShowAlertModal(false);
+      setViewCard(false);
       setCardIdToDelete(null);
       setCardIdToUpdate(null);
+      setCardIdToShow(null);
     }
 
     const createNewCard = (cardObject) => {
@@ -146,13 +150,10 @@ const PageEdit = ({ token, setTokenFn}) => {
       })
     }
 
-    const showCard = () => {
-      console.log("TODO - show card in view / play mode")
-    }
-
     // Handler Functions
     const [cardIdToDelete, setCardIdToDelete] = useState(null)
     const [cardIdToUpdate, setCardIdToUpdate] = useState(null)
+    const [cardIdToShow, setCardIdToShow] = useState(null)
     const [deleteDeckPressed, setDeleteDeckPressed] = useState(false)
 
     // UseEffects
@@ -178,6 +179,13 @@ const PageEdit = ({ token, setTokenFn}) => {
     }, [cardIdToUpdate])
 
     useEffect(() => {
+      if (cardIdToShow) {
+        setCardId(cardIdToShow);
+        setViewCard(true);
+      }
+    }, [cardIdToShow])
+
+    useEffect(() => {
       if (deleteDeckPressed) {
         setDeleteFun(() => deleteDeck);
         setShowAlertModal(true);
@@ -193,15 +201,18 @@ const PageEdit = ({ token, setTokenFn}) => {
         {showAlertModal && 
               <AlertModal closeModal={closeModal} deleteFunc={deleteFun}/>
         }
+        {viewCard &&
+          <ViewCardModal closeModal={closeModal} cardId={cardId}/>
+        }
             <main style={mainStyle}>
                 <div className='flex justify-between'>
                     <button 
-                        className='text-sm text-grey-400 hover:text-blue-700'
-                        onClick={() => { navigate(`/`) }}
-                        >Return</button>
+                      className='text-sm text-gray-400 hover:text-blue-700'
+                      onClick={() => { navigate(`/`) }}
+                    >Return</button>
                     <h1 className='font-bold text-xl'>{title}</h1>
                     <button 
-                      className='text-sm text-grey-400 hover:text-red-800'
+                      className='text-sm text-gray-400 hover:text-red-800'
                       onClick={() => setDeleteDeckPressed(true)}
                       >Delete Deck</button>
                 </div>
@@ -209,7 +220,15 @@ const PageEdit = ({ token, setTokenFn}) => {
                 <h3 className="text-xl font-semibold text-left mb-2">View Deck</h3>
                 <button 
                   className="w-full bg-blue-100 text-blue-700 font-bold py-3 px-4 rounded-md transition duration-200 hover:bg-blue-200 mb-5"
-                  onClick={() => console.log("TODO")}
+                  onClick={() => {
+                    const data = {
+                      title: title,
+                      id: id,
+                    }
+                    const queryString = new URLSearchParams(data).toString();
+                    // navigate(`/play?${queryString}`)
+                    window.open(`/play?${queryString}`, '_blank');
+                  }}
                   >
                   Shuffle and Play
                 </button>
@@ -228,7 +247,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                         <div className="min-w-0 flex-auto text-left">
                             <div className="text-sm/6 font-semibold text-gray-900">
                             <div
-                            onClick={showCard}
+                            onClick={() => setCardIdToShow(card.id)}
                             className="text-gray-900 hover:text-[#2563eb] hover:cursor-pointer"
                             >
                               {card.topic &&

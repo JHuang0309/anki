@@ -32,17 +32,6 @@
       ],
       "cards": [
         {
-          "id": 785782,
-          "title": "sdfsdfsfds",
-          "topic": "",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "",
-          "answer": "",
-          "deckId": "542173",
-          "createdAt": "3/7/2025, 11:03:43 PM"
-        },
-        {
           "id": 566108,
           "title": "sdfdsf",
           "topic": "",
@@ -87,37 +76,15 @@
           "createdAt": "3/7/2025, 11:05:57 PM"
         },
         {
-          "id": 450162,
-          "title": "sadfs",
-          "topic": "",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "",
-          "answer": "",
-          "deckId": "542173",
-          "createdAt": "3/7/2025, 11:12:13 PM"
-        },
-        {
           "id": 675330,
-          "title": "sdfs",
-          "topic": "sdfsf",
+          "title": "What is the chemical formula for water?",
+          "topic": "Nomenclature",
           "difficulty": "Easy",
-          "type": "MC",
-          "desc": "",
-          "answer": "",
+          "type": "SA",
+          "desc": "Water is a molecule composed of two hydrogen atoms bonded to one oxygen atom.",
+          "answer": "H₂O",
           "deckId": "542173",
           "createdAt": "3/7/2025, 11:14:16 PM"
-        },
-        {
-          "id": 679709,
-          "title": "Hell",
-          "topic": "Topic",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "",
-          "answer": "",
-          "deckId": "542173",
-          "createdAt": "3/7/2025, 11:15:17 PM"
         }
       ]
     }

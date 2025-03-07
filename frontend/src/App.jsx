@@ -14,6 +14,7 @@ import PageLogin from './pages/PageLogin.jsx';
 import PageDashboard from './pages/PageDashboard.jsx';
 import Logout from './components/Logout.jsx';
 import PageEdit from './pages/PageEdit.jsx';
+import PagePlay from './pages/PagePlay.jsx';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
           <Route path="/register" element={<PageRegister setTokenFn={setToken}/>} />
           <Route path="/login" element={<PageLogin setTokenFn={setToken}/>}/>
           <Route path="/edit" element={<PageEdit setTokenFn={setToken}/>}/>
+          <Route path="/play" element={<PagePlay setTokenFn={setToken}/>}/>
         </Routes>
       </BrowserRouter>
     </>
