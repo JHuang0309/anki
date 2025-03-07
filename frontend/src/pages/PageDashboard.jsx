@@ -15,6 +15,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
   const [decks, setDecks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showAlertModal, setShowAlertModal] = useState(false);
+  const [deckId, setDeckId] = useState(null)
 
   // functions
   const loadUserData = () => {
@@ -24,7 +25,6 @@ const PageDashboard = ({ token, setTokenFn}) => {
       },
     })
       .then(res => {
-        // console.log("It worked:", res);
         setUserName(res.data.name)
         setDecks(res.data.decks)
       })
@@ -69,6 +69,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
     .then(()=> {
       closeModal();
       loadUserData();
+      setDeckId(null);
     })
     .catch(res => {
       console.error("Unexpected error:", res);
@@ -88,6 +89,12 @@ const PageDashboard = ({ token, setTokenFn}) => {
     loadUserData();
   }, []);
 
+  useEffect(() => {
+    if (deckId) {
+      setShowAlertModal(true);
+    }
+  }, [deckId])
+
 
   // Component Styles
   const mainStyle= { margin: '3em'};
@@ -97,7 +104,7 @@ const PageDashboard = ({ token, setTokenFn}) => {
       <Modal closeModal={closeModal} createDeck={createNewDeck}/>
     }
     {showAlertModal && 
-      <AlertModal closeModal={closeModal} deleteFunc={deleteDeck}/>
+      <AlertModal closeModal={closeModal} deleteFunc={() => deleteDeck(deckId)}/>
     }
       <h1 className="text-left mx-6 text-2xl px-4 font-semibold">
         Hi <span className='text-[#2563eb]'>{userName}</span>, welcome back to Anki!
@@ -164,17 +171,13 @@ const PageDashboard = ({ token, setTokenFn}) => {
                   <div className="shrink-0 sm:flex sm:flex-col">
                     <button 
                       className='text-gray-400 text-sm hover:text-red-800'
-                      onClick={() => setShowAlertModal(true)}
+                      onClick={() => setDeckId(deck.id)}
                       >Delete</button>
                   </div>
                 </div>
               </li>
             ))}
             <hr className="border-t border-gray-300 my-3"/>
-            <button
-              className='text-sm text-grey-400 hover:text-blue-700'
-              onClick={createDeck}
-            >Create new deck</button>
           </ul>
           
         </div>

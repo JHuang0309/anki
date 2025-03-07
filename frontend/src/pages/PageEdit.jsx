@@ -85,6 +85,8 @@ const PageEdit = ({ token, setTokenFn}) => {
       setModalType('Create');
       setShowModal(false);
       setShowAlertModal(false);
+      setCardIdToDelete(null);
+      setCardIdToUpdate(null);
     }
 
     const createNewCard = (cardObject) => {
@@ -159,25 +161,25 @@ const PageEdit = ({ token, setTokenFn}) => {
       fetchCards();
     }, []);
 
-    useEffect(() => {
-      setDeleteFun(() => deleteCard);
-      setCardId(cardIdToDelete);
+    useEffect(() => {    
       if (cardIdToDelete) {
+        setDeleteFun(() => deleteCard);
+        setCardId(cardIdToDelete);
         setShowAlertModal(true);
       }
     }, [cardIdToDelete])
 
     useEffect(() => {
-      setModalType('Save');
-      setCardId(cardIdToUpdate);
       if (cardIdToUpdate) {
+        setCardId(cardIdToUpdate);
+        setModalType('Save');
         showCardModal();
       }
     }, [cardIdToUpdate])
 
     useEffect(() => {
-      setDeleteFun(() => deleteDeck);
       if (deleteDeckPressed) {
+        setDeleteFun(() => deleteDeck);
         setShowAlertModal(true);
       }
     }, [deleteDeckPressed])

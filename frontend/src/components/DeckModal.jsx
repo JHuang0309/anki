@@ -16,7 +16,13 @@ const Modal = ({ closeModal, createDeck }) => {
           transition
           className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
         />
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <form 
+          className="fixed inset-0 z-10 w-screen overflow-y-auto"
+          onSubmit={(e) => {
+            e.preventDefault(); 
+            handleCreateDeck(); 
+          }}
+        >
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
             <DialogPanel
               transition
@@ -57,7 +63,7 @@ const Modal = ({ closeModal, createDeck }) => {
               </div>
             </DialogPanel>
           </div>
-        </div>
+        </form>
       </Dialog>
       
     );

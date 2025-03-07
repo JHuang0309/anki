@@ -184,7 +184,8 @@ export const setDecks = (authUserId, newDecks) =>
 
   export const deleteDeck = (authUserId, deckId) => {
     dataLock((resolve, reject) => {
-      users[authUserId].decks = users[authUserId].decks.filter(d => d.id === deckId);
+      users[authUserId].decks = users[authUserId].decks.filter(d => d.id !== +deckId);
+      users[authUserId].cards = users[authUserId].cards.filter(c => c.deckId !== deckId);
       resolve();
     });
   }

@@ -18,78 +18,106 @@
       "admin": true,
       "decks": [
         {
-          "id": 447469,
-          "title": "Finally",
-          "createdAt": "3/7/2025, 10:25:15 PM",
+          "id": 542173,
+          "title": "ATest",
+          "createdAt": "3/7/2025, 11:03:31 PM",
+          "numCards": "0"
+        },
+        {
+          "id": 609518,
+          "title": "sdfsf",
+          "createdAt": "3/7/2025, 11:07:21 PM",
           "numCards": "0"
         }
       ],
       "cards": [
         {
-          "id": 878850,
-          "title": "ewrewr",
-          "topic": "werew",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "wer",
-          "answer": "wer",
-          "deckId": "797067",
-          "createdAt": "3/7/2025, 7:15:58 PM"
-        },
-        {
-          "id": 793978,
-          "title": "qweqqwe",
-          "topic": "qwe",
+          "id": 785782,
+          "title": "sdfsdfsfds",
+          "topic": "",
           "difficulty": "Easy",
           "type": "MC",
           "desc": "",
           "answer": "",
-          "deckId": "977301",
-          "createdAt": "3/7/2025, 9:35:45 PM"
+          "deckId": "542173",
+          "createdAt": "3/7/2025, 11:03:43 PM"
         },
         {
-          "id": 872829,
-          "title": "sdfAGAIN",
-          "topic": "sdf",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "sdfdsf",
-          "answer": "f",
-          "deckId": "977301",
-          "createdAt": "3/7/2025, 9:59:07 PM"
-        },
-        {
-          "id": 906759,
-          "title": "gfdg",
-          "topic": "dfg",
-          "difficulty": "Easy",
-          "type": "MC",
-          "desc": "dfg",
-          "answer": "",
-          "deckId": "977301",
-          "createdAt": "3/7/2025, 10:07:48 PM"
-        },
-        {
-          "id": 700770,
-          "title": "Card 2",
-          "topic": "acads",
+          "id": 566108,
+          "title": "sdfdsf",
+          "topic": "",
           "difficulty": "Easy",
           "type": "MC",
           "desc": "",
           "answer": "",
-          "deckId": "574631",
-          "createdAt": "3/7/2025, 10:20:17 PM"
+          "deckId": null,
+          "createdAt": "3/7/2025, 11:05:53 PM"
         },
         {
-          "id": 456721,
-          "title": "Is this actually working",
-          "topic": "sfds",
+          "id": 280843,
+          "title": "sdfdsf",
+          "topic": "",
           "difficulty": "Easy",
           "type": "MC",
           "desc": "",
           "answer": "",
-          "deckId": "574631",
-          "createdAt": "3/7/2025, 10:24:53 PM"
+          "deckId": null,
+          "createdAt": "3/7/2025, 11:05:53 PM"
+        },
+        {
+          "id": 484753,
+          "title": "sdfdsf",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": null,
+          "createdAt": "3/7/2025, 11:05:57 PM"
+        },
+        {
+          "id": 120653,
+          "title": "sdfdsf",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": null,
+          "createdAt": "3/7/2025, 11:05:57 PM"
+        },
+        {
+          "id": 450162,
+          "title": "sadfs",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "542173",
+          "createdAt": "3/7/2025, 11:12:13 PM"
+        },
+        {
+          "id": 675330,
+          "title": "sdfs",
+          "topic": "sdfsf",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "542173",
+          "createdAt": "3/7/2025, 11:14:16 PM"
+        },
+        {
+          "id": 679709,
+          "title": "Hell",
+          "topic": "Topic",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "542173",
+          "createdAt": "3/7/2025, 11:15:17 PM"
         }
       ]
     }

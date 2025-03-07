@@ -93,7 +93,13 @@ const Modal = ({ closeModal, createCard, updateCard, deckId, cardId, modalType }
           transition
           className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
         />
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <form 
+          className="fixed inset-0 z-10 w-screen overflow-y-auto"
+          onSubmit={(e) => {
+            e.preventDefault(); 
+            modalType === "Create" ? handleCreateCard() : handleUpdateCard()}
+          }
+        >
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-4">
             <DialogPanel
               transition
@@ -199,8 +205,8 @@ const Modal = ({ closeModal, createCard, updateCard, deckId, cardId, modalType }
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-between">
                 <button
-                  type="button"
-                  onClick={modalType === "Create" ? handleCreateCard : handleUpdateCard}
+                  type="submit"
+                  // onClick={modalType === "Create" ? handleCreateCard : handleUpdateCard}
                   className="inline-flex w-full justify-center rounded-md bg-[#2563eb] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3b82f6] sm:w-auto"
                 >
                   {modalType}
@@ -216,7 +222,7 @@ const Modal = ({ closeModal, createCard, updateCard, deckId, cardId, modalType }
               </div>
             </DialogPanel>
           </div>
-        </div>
+        </form>
       </Dialog>
       
     );

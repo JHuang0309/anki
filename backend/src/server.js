@@ -134,7 +134,7 @@ app.delete(
   "/delete/deck",
   performRequest(
     authed(async (req, res, authUserId) => {
-      const { deckId } = req.params;
+      const { deckId } = req.query;
       deleteDeck(authUserId, deckId);
       return res.json({});
     })
