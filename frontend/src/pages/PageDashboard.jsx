@@ -170,7 +170,13 @@ const PageDashboard = ({ token, setTokenFn}) => {
                 </div>
               </li>
             ))}
+            <hr className="border-t border-gray-300 my-3"/>
+            <button
+              className='text-sm text-grey-400 hover:text-blue-700'
+              onClick={createDeck}
+            >Create new deck</button>
           </ul>
+          
         </div>
       </main>
       

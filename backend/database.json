@@ -16,7 +16,14 @@
       "password": "123",
       "image": null,
       "admin": true,
-      "decks": [],
+      "decks": [
+        {
+          "id": 447469,
+          "title": "Finally",
+          "createdAt": "3/7/2025, 10:25:15 PM",
+          "numCards": "0"
+        }
+      ],
       "cards": [
         {
           "id": 878850,
@@ -28,6 +35,61 @@
           "answer": "wer",
           "deckId": "797067",
           "createdAt": "3/7/2025, 7:15:58 PM"
+        },
+        {
+          "id": 793978,
+          "title": "qweqqwe",
+          "topic": "qwe",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "977301",
+          "createdAt": "3/7/2025, 9:35:45 PM"
+        },
+        {
+          "id": 872829,
+          "title": "sdfAGAIN",
+          "topic": "sdf",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "sdfdsf",
+          "answer": "f",
+          "deckId": "977301",
+          "createdAt": "3/7/2025, 9:59:07 PM"
+        },
+        {
+          "id": 906759,
+          "title": "gfdg",
+          "topic": "dfg",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "dfg",
+          "answer": "",
+          "deckId": "977301",
+          "createdAt": "3/7/2025, 10:07:48 PM"
+        },
+        {
+          "id": 700770,
+          "title": "Card 2",
+          "topic": "acads",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "574631",
+          "createdAt": "3/7/2025, 10:20:17 PM"
+        },
+        {
+          "id": 456721,
+          "title": "Is this actually working",
+          "topic": "sfds",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "",
+          "deckId": "574631",
+          "createdAt": "3/7/2025, 10:24:53 PM"
         }
       ]
     }

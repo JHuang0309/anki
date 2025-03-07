@@ -12,12 +12,12 @@ const PageEdit = ({ token, setTokenFn}) => {
     const queryParams = new URLSearchParams(location.search);
     const [title, setTitle] = useState(queryParams.get("title"))
     const [id, setId] = useState(queryParams.get("id"))
-    const [cardId, setCardId] = useState(null)
     const [showModal, setShowModal] = useState(false);
     const [cards, setCards] = useState([]);
     const [showAlertModal, setShowAlertModal] = useState(false);
-    const [modalType, setModalType] = useState('Create');
+    const [modalType, setModalType] = useState('Create')
     const [deleteFun, setDeleteFun] = useState(null)
+    const [cardId, setCardId] = useState(null)
 
     const fetchCards = () => {
       axios.get('http://localhost:5005/cards', {
@@ -47,7 +47,7 @@ const PageEdit = ({ token, setTokenFn}) => {
       axios.delete('http://localhost:5005/delete/card', 
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-          params: { cardId: cardId },
+          params: { cardId: cardIdToDelete },
         },
       )
       .then(()=> {
@@ -62,7 +62,7 @@ const PageEdit = ({ token, setTokenFn}) => {
       })
     }
 
-    const deleteDeck = (id) => {
+    const deleteDeck = () => {
       axios.delete('http://localhost:5005/delete/deck', 
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -79,11 +79,6 @@ const PageEdit = ({ token, setTokenFn}) => {
         // setAlertMsg(res.response.data.error);
         // setShowAlert(true);
       })
-    }
-
-    const handleDelete = (type) => {
-      setDeleteFun(() => type === 'deck' ? deleteDeck : deleteCard);
-      setShowAlertModal(true);
     }
 
     const closeModal = () => {
@@ -153,20 +148,41 @@ const PageEdit = ({ token, setTokenFn}) => {
       console.log("TODO - show card in view / play mode")
     }
 
+    // Handler Functions
+    const [cardIdToDelete, setCardIdToDelete] = useState(null)
+    const [cardIdToUpdate, setCardIdToUpdate] = useState(null)
+    const [deleteDeckPressed, setDeleteDeckPressed] = useState(false)
+
     // UseEffects
 
     useEffect(() => {
-        fetchCards();
+      fetchCards();
     }, []);
 
     useEffect(() => {
-      if (cardId !== null) {
-        // cardId has been set, now call handleDelete
-        handleDelete('card');
+      setDeleteFun(() => deleteCard);
+      setCardId(cardIdToDelete);
+      if (cardIdToDelete) {
+        setShowAlertModal(true);
       }
-    }, [cardId]);
+    }, [cardIdToDelete])
 
-    const mainStyle= { margin: '3em', marginTop: '1em'};
+    useEffect(() => {
+      setModalType('Save');
+      setCardId(cardIdToUpdate);
+      if (cardIdToUpdate) {
+        showCardModal();
+      }
+    }, [cardIdToUpdate])
+
+    useEffect(() => {
+      setDeleteFun(() => deleteDeck);
+      if (deleteDeckPressed) {
+        setShowAlertModal(true);
+      }
+    }, [deleteDeckPressed])
+
+  const mainStyle= { margin: '3em', marginTop: '1em'};
 	return (
 		<>
         {showModal && 
@@ -184,7 +200,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                     <h1 className='font-bold text-xl'>{title}</h1>
                     <button 
                       className='text-sm text-grey-400 hover:text-red-800'
-                      onClick={() => handleDelete('deck')}
+                      onClick={() => setDeleteDeckPressed(true)}
                       >Delete Deck</button>
                 </div>
                 <hr className="border-t border-gray-300 my-4"/>
@@ -213,9 +229,14 @@ const PageEdit = ({ token, setTokenFn}) => {
                             onClick={showCard}
                             className="text-gray-900 hover:text-[#2563eb] hover:cursor-pointer"
                             >
-                            <span
-                              className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'
-                            >{card.topic}</span> {card.title}
+                              {card.topic &&
+                                <>
+                                  <span
+                                  className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'
+                                  >{card.topic}</span><span>&nbsp;</span>
+                                </>
+                              }
+                             {card.title}
                             </div>
                             </div>
                             <p className="mt-1 truncate text-xs/5 text-gray-500">
@@ -234,21 +255,13 @@ const PageEdit = ({ token, setTokenFn}) => {
                         <div className="shrink-0 sm:flex sm:flex-col mr-4">
                             <button 
                             className='text-sm hover:text-[#2563eb]'
-                            onClick={() => {
-                              setCardId(card.id);
-                              setModalType('Save')
-                              showCardModal();
-                            }}
+                            onClick={() => setCardIdToUpdate(card.id)}
                             >Edit</button>
                         </div>
                         <div className="shrink-0 sm:flex sm:flex-col">
                             <button 
                               className='text-gray-400 text-sm hover:text-red-800'
-                              // onClick={() => {
-                              //   setCardId(card.id);
-                              //   handleDelete('card');
-                              // }}
-                              onClick={() => setCardId(card.id)}
+                              onClick={() => setCardIdToDelete(card.id)}
                               >Delete</button>
                         </div>
                         </div>
