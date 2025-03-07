@@ -97,7 +97,6 @@ const generateId = (currentList, max = 999999) => {
  */
 export const getUserIdFromAuthorization = authorization => {
   // Note: Authorization header comes in the format: 'Bearer myToken'
-  console.log("Service - getUserIdFromAuth:", authorization)
   const token = authorization.replace('Bearer ', '');
   try {
     const { userId, } = jwt.verify(token, JWT_KEY);
@@ -241,7 +240,7 @@ export const updateCard = (authUserId, cardDetails) => {
 
 export const deleteCard = (authUserId, cardId) => {
   dataLock((resolve, reject) => {
-    users[authUserId].cards = users[authUserId].cards.filter(c => c.id !== Number(cardId));
+    users[authUserId].cards = users[authUserId].cards.filter(c => c.id !== +cardId);
     resolve();
   });
 }

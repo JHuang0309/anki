@@ -17,6 +17,7 @@ const PageEdit = ({ token, setTokenFn}) => {
     const [cards, setCards] = useState([]);
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [modalType, setModalType] = useState('Create');
+    const [deleteFun, setDeleteFun] = useState(null)
 
     const fetchCards = () => {
       axios.get('http://localhost:5005/cards', {
@@ -61,8 +62,32 @@ const PageEdit = ({ token, setTokenFn}) => {
       })
     }
 
+    const deleteDeck = (id) => {
+      axios.delete('http://localhost:5005/delete/deck', 
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          params: { deckId: id },
+        },
+      )
+      .then(()=> {
+        closeModal();
+        navigate('/');
+      })
+      .catch(res => {
+        console.error("Unexpected error:", res);
+        // setAlertType('error');
+        // setAlertMsg(res.response.data.error);
+        // setShowAlert(true);
+      })
+    }
+
+    const handleDelete = (type) => {
+      setDeleteFun(() => type === 'deck' ? deleteDeck : deleteCard);
+      setShowAlertModal(true);
+    }
+
     const closeModal = () => {
-      setModalType('Create')
+      setModalType('Create');
       setShowModal(false);
       setShowAlertModal(false);
     }
@@ -134,6 +159,13 @@ const PageEdit = ({ token, setTokenFn}) => {
         fetchCards();
     }, []);
 
+    useEffect(() => {
+      if (cardId !== null) {
+        // cardId has been set, now call handleDelete
+        handleDelete('card');
+      }
+    }, [cardId]);
+
     const mainStyle= { margin: '3em', marginTop: '1em'};
 	return (
 		<>
@@ -141,7 +173,7 @@ const PageEdit = ({ token, setTokenFn}) => {
             <Modal closeModal={closeModal} createCard={createNewCard} updateCard={updateCard} deckId={id} cardId={cardId} modalType={modalType}/>
         }
         {showAlertModal && 
-              <AlertModal closeModal={closeModal} deleteFunc={deleteCard}/>
+              <AlertModal closeModal={closeModal} deleteFunc={deleteFun}/>
         }
             <main style={mainStyle}>
                 <div className='flex justify-between'>
@@ -150,7 +182,10 @@ const PageEdit = ({ token, setTokenFn}) => {
                         onClick={() => { navigate(`/`) }}
                         >Return</button>
                     <h1 className='font-bold text-xl'>{title}</h1>
-                    <button className='text-sm text-grey-400 hover:text-red-800' >Delete Deck</button>
+                    <button 
+                      className='text-sm text-grey-400 hover:text-red-800'
+                      onClick={() => handleDelete('deck')}
+                      >Delete Deck</button>
                 </div>
                 <hr className="border-t border-gray-300 my-4"/>
                 <h3 className="text-xl font-semibold text-left mb-2">View Deck</h3>
@@ -173,7 +208,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                     <li key={card.id} className="flex justify-between gap-x-6 py-5">
                         <div className="flex min-w-0 gap-x-4">
                         <div className="min-w-0 flex-auto text-left">
-                            <p className="text-sm/6 font-semibold text-gray-900">
+                            <div className="text-sm/6 font-semibold text-gray-900">
                             <div
                             onClick={showCard}
                             className="text-gray-900 hover:text-[#2563eb] hover:cursor-pointer"
@@ -182,7 +217,7 @@ const PageEdit = ({ token, setTokenFn}) => {
                               className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-700/10 ring-inset'
                             >{card.topic}</span> {card.title}
                             </div>
-                            </p>
+                            </div>
                             <p className="mt-1 truncate text-xs/5 text-gray-500">
                             Created on <time dateTime={card.createdAt}>
                             {new Date(card.createdAt).toLocaleDateString('en-US', {
@@ -209,10 +244,11 @@ const PageEdit = ({ token, setTokenFn}) => {
                         <div className="shrink-0 sm:flex sm:flex-col">
                             <button 
                               className='text-gray-400 text-sm hover:text-red-800'
-                              onClick={() => {
-                                setCardId(card.id);
-                                setShowAlertModal(true)
-                              }}
+                              // onClick={() => {
+                              //   setCardId(card.id);
+                              //   handleDelete('card');
+                              // }}
+                              onClick={() => setCardId(card.id)}
                               >Delete</button>
                         </div>
                         </div>
