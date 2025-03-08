@@ -9,7 +9,7 @@ import express from 'express';
 // import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 
-import { InputError, AccessError, } from './error.js';
+import { InputError, AccessError, } from './error.mjs';
 import {
     save,
     reset,
@@ -32,7 +32,7 @@ import {
     getCard,
     updateCard,
     deleteCard,
-  } from './service.js';
+  } from './service.mjs';
 
 const app = express()
 
