@@ -4,8 +4,8 @@
   "main": "server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r esm src/server",
-    "dev": "nodemon -r esm src/server"
+    "start": "node src/server",
+    "dev": "nodemon src/server"
   },
   "keywords": [],
   "author": "",
