@@ -121,6 +121,16 @@
         }
       ],
       "sessionActive": false
+    },
+    "864566": {
+      "email": "user1@gmail.com",
+      "name": "user",
+      "password": "123",
+      "image": null,
+      "admin": false,
+      "decks": [],
+      "cards": [],
+      "sessionActive": false
     }
   },
   "cards": {},
