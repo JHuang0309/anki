@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://anki-ug7c.onrender.com', // change port to whatever the server is running on
+        target: 'http://localhost:5005', // change port to whatever the server is running on
         changeOrigin: true,
         secure: false,
       },
