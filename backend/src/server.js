@@ -32,7 +32,7 @@ import {
     getCard,
     updateCard,
     deleteCard,
-  } from './service';
+  } from './service.js';
 
 const app = express()
 
