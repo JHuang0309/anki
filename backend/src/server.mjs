@@ -37,8 +37,9 @@ import {
 const app = express()
 
 app.use(cors({
-  origin: ['https://anki-ug7c.onrender.com'],
+  origin: ['https://anki-frontend.onrender.com'],
 })); //  allow any incoming HTTP requests from any origin to access the server's resources
+// app.use(cors())
 app.use(express.urlencoded({ extended: true, }));
 app.use(express.json({ limit: '500mb', }));
 

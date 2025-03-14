@@ -28,6 +28,12 @@
           "title": "test",
           "createdAt": "3/8/2025, 1:24:57 PM",
           "numCards": "0"
+        },
+        {
+          "id": 494079,
+          "title": "TEst",
+          "createdAt": "3/14/2025, 12:06:26 PM",
+          "numCards": "0"
         }
       ],
       "cards": [
@@ -118,6 +124,17 @@
           "answer": "B) Photosynthesis",
           "deckId": "542173",
           "createdAt": "3/8/2025, 12:42:57 AM"
+        },
+        {
+          "id": 864019,
+          "title": "Thus is woorking",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "",
+          "answer": "er",
+          "deckId": "494079",
+          "createdAt": "3/14/2025, 12:06:32 PM"
         }
       ],
       "sessionActive": false

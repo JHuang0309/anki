@@ -9,6 +9,7 @@ import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import AsyncLock from 'async-lock'; // library used to ensure shared resources are managed appropriately
 import { InputError, AccessError, } from './error.mjs';
+// import { Client } from 'pg';
 
 const lock = new AsyncLock(); // creates an instance of a lock to manage access to shared resources
 
@@ -18,6 +19,21 @@ const DATABASE_FILE = './database.json'; // for now we'll use a local database t
 /***************************************************************
                        State Management
 ***************************************************************/
+
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL, // Your connection string from Render
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
+
+// client.connect();
+
+// client.query('SELECT NOW()', (err, res) => {
+//   if (err) throw err;
+//   console.log(res.rows);
+//   client.end();
+// });
 
 let users = {};
 let cards = {};
