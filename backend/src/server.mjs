@@ -38,6 +38,7 @@ const app = express()
 
 app.use(cors({
   origin: ['https://anki-frontend.onrender.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 })); //  allow any incoming HTTP requests from any origin to access the server's resources
 // app.use(cors())
 app.use(express.urlencoded({ extended: true, }));
