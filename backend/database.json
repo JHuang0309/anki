@@ -34,6 +34,12 @@
           "title": "TEst",
           "createdAt": "3/14/2025, 12:06:26 PM",
           "numCards": "0"
+        },
+        {
+          "id": 529966,
+          "title": "New",
+          "createdAt": "14/03/2025, 12:44:45 pm",
+          "numCards": "0"
         }
       ],
       "cards": [
@@ -135,6 +141,17 @@
           "answer": "er",
           "deckId": "494079",
           "createdAt": "3/14/2025, 12:06:32 PM"
+        },
+        {
+          "id": 647313,
+          "title": "asdfds",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "sdf",
+          "answer": "f",
+          "deckId": "529966",
+          "createdAt": "14/03/2025, 12:44:51 pm"
         }
       ],
       "sessionActive": false
