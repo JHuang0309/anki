@@ -22,8 +22,8 @@ function App() {
   const [backend, setBackend] = useState([{}])
 
   useEffect(() => {
-    fetch("https://anki-ug7c.onrender.com/api").then(res => res.json()).then(data => setBackend(data))
-    // fetch("/api").then(res => res.json()).then(data => setBackend(data))
+    // fetch("https://anki-ug7c.onrender.com/api").then(res => res.json()).then(data => setBackend(data))
+    fetch("/api").then(res => res.json()).then(data => setBackend(data))
     // fetch("https://anki-production-601d.up.railway.app/api").then(res => res.json()).then(data => setBackend(data))
   }, [])
 

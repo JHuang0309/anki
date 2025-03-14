@@ -1,0 +1,63 @@
+{
+  "users": {
+    "432591": {
+      "email": "user2@gmail.com",
+      "name": "User 2",
+      "password": "123",
+      "image": null,
+      "admin": true,
+      "decks": [
+        {
+          "id": 519733,
+          "title": "Hello",
+          "createdAt": "14/03/2025, 12:03:12 pm",
+          "numCards": "0"
+        },
+        {
+          "id": 100688,
+          "title": "Test",
+          "createdAt": "14/03/2025, 12:08:54 pm",
+          "numCards": "0"
+        }
+      ],
+      "cards": [
+        {
+          "id": 373272,
+          "title": "This is a question card",
+          "topic": "sdf",
+          "difficulty": "Hard",
+          "type": "SA",
+          "desc": "fdgfdg",
+          "answer": "dfgfdg",
+          "deckId": "519733",
+          "createdAt": "14/03/2025, 12:03:24 pm"
+        },
+        {
+          "id": 773023,
+          "title": "Card 1",
+          "topic": "",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "sdff",
+          "answer": "asdf",
+          "deckId": "100688",
+          "createdAt": "14/03/2025, 12:09:01 pm"
+        },
+        {
+          "id": 313261,
+          "title": "ddfgfd",
+          "topic": "dfgdfg",
+          "difficulty": "Easy",
+          "type": "MC",
+          "desc": "dfgdfg",
+          "answer": "dfgdfgdfg",
+          "deckId": "100688",
+          "createdAt": "14/03/2025, 12:09:06 pm"
+        }
+      ],
+      "sessionActive": false
+    }
+  },
+  "cards": {},
+  "decks": {}
+}
