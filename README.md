@@ -44,7 +44,7 @@ To run the **Flashcard Maker** project locally on your machine, follow these ste
    ```
    For the **backend** (Express server):
    ```bash
-   cd frontend
+   cd backend
    npm install
    ```
 
